@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!-- Bean (Java 객체) 을 만드는 파일 : Spring Bean Configuration File -->
+  
+  <!-- 생성된 Bean 은 Spring Container 에 보관된다. -->
+  
+  <!-- Adder adder = new Adder() -->
+  <bean class="com.min.app01.ex01.Adder" id="adder"></bean>
+  
+  <!-- Subtractor subtractor = new Subtractor() -->
+  <bean class="com.min.app01.ex01.Subtractor" id="subtractor"></bean>
+
+  <!-- java.util.Date today = new java.util.Date() -->
+  <bean class="java.util.Date" id="today"></bean>
+
+  <!-- property 태그는 setter 를 동작시킨다. -->
+  <bean class="com.min.app01.ex01.Calculator" id="calculator1">
+    <property name="buied" ref="today"></property>
+    <property name="subtractor" ref="subtractor"></property>
+    <property name="adder" ref="adder"></property>
+    <property name="price" value="100"></property>
+    <property name="maker" value="samsung"></property>
+  </bean>
+
+  <!-- constructor-arg 태그는 생성자를 동작시킨다. 생성자의 매개변수 순서대로 값을 저장해야 한다. -->
+  <bean class="com.min.app01.ex01.Calculator" id="calculator2">
+    <constructor-arg value="LG"></constructor-arg>
+    <constructor-arg value="200"></constructor-arg>
+    <constructor-arg ref="adder"></constructor-arg>
+    <constructor-arg ref="subtractor"></constructor-arg>
+    <constructor-arg ref="today"></constructor-arg>
+  </bean>
+
+</beans>
