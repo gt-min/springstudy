@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-${serverTime}
+
   <%-- servlet-context.xml's <resources> 태그 동작 확인 --%>
   <div>
     <img src="${contextPath}/resources/images/404.jpg" width="50px">
