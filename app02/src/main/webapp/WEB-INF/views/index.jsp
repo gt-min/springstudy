@@ -46,22 +46,71 @@
 
   <hr>
   
+  <%-- MvcController5's Model 과 forward 를 이용한 데이터 전달 방식 확인 --%>
   <div>
-    <form action="${contextPath}/param">
-      <div>
-        <label for=""></label>
-        <input type="text" name="" id="">
-      </div>
-      <div>
-        <label for=""></label>
-        <input type="text" name="" id="">
-      </div>
-    </form>
+    <div><a href="${contextPath}/news/list">뉴스</a></div>
   </div>
+  
+  <hr>
+  
+  <%-- MvcController6's RedirectAttributes 와 redirect 를 이용한 데이터 전달 방식 확인 --%>
+  <div>
+    <div><a href="${contextPath}/blog/register">블로그등록</a></div>
+    <div><a href="${contextPath}/blog/modify?blogNo=1">블로그수정</a></div>
+    <div><a href="${contextPath}/blog/remove">블로그삭제</a></div>
+  </div>
+  
+  <hr>
+  
+  <%-- MvcController7's HttpSession 을 이용한 세션 데이터 저장 방식 --%>
+  <c:if test="${empty sessionScope.loginUser}">
+    <div>
+      <form action="${contextPath}/user/login" method="post">
+        <input type="hidden" name="redirectURL" value="/main">
+        <div>
+          <label for="id">ID</label>
+          <input type="text" name="id" id="id">
+        </div>
+        <div>
+          <label for="pw">PW</label>
+          <input type="password" name="pw" id="pw">
+        </div>
+        <div>
+          <button type="submit">LOG IN</button>
+        </div>
+      </form>
+    </div>
+  </c:if>
+  <c:if test="${not empty sessionScope.loginUser}">
+    <div><a href="${contextPath}/user/mypage">${sessionScope.loginUser.id}</a> 님 반갑습니다.</div>
+    <div><a href="${contextPath}/user/logout">LOG OUT</a></div>
+  </c:if>
 
-
-
-
+  <hr>
+  
+  <%-- MvcController8's @SessionAttributes / @SessionAttribute 를 활용한 세션 데이터 저장 방식 --%>
+  <c:if test="${empty sessionScope.memberVO}">
+    <div>
+      <form action="${contextPath}/member/login" method="post">
+        <input type="hidden" name="redirectURL" value="/main">
+        <div>
+          <label for="id">ID</label>
+          <input type="text" name="id" id="id">
+        </div>
+        <div>
+          <label for="pw">PW</label>
+          <input type="password" name="pw" id="pw">
+        </div>
+        <div>
+          <button type="submit">LOG IN</button>
+        </div>
+      </form>
+    </div>
+  </c:if>
+  <c:if test="${not empty sessionScope.memberVO}">
+    <div><a href="${contextPath}/member/mypage">${sessionScope.memberVO.id}</a> 님 어서오세요.</div>
+    <div><a href="${contextPath}/member/logout">LOG OUT</a></div>
+  </c:if>
 
 </body>
 </html>
