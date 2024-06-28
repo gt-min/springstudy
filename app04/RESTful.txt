@@ -1,0 +1,21 @@
+RESTful
+
+1. REpresentation State Transfer
+2. 요청 주소를 작성하는 한 방식이다.
+3. 요청 파라미터를 ? 뒤에 추가하는 Query String 방식과 
+   요청 파라미터를 주소에 포함하는 Path Variable 방식을 사용할 수 있다.
+   (RESTful 의 기본 방식은 Path Variagle 방식)
+4. 요청 본문에 데이터를 포함해서 데이터를 전송할 수 있다.
+5. 요청의 구분을 "주소 + 메소드" 조합으로 구성한다.
+
+6. CRUD 요청 예시
+
+           | URL                       | Method
+      -----|---------------------------|----------
+   1) 목록 | /books                    | GET
+           | /books/page/1             |
+           | /books/page/1/display/20  |
+   2) 상세 | /books/1                  | GET
+   3) 삽입 | /books                    | POST
+   4) 수정 | /books                    | PUT
+   5) 삭제 | /books/1                  | DELETE

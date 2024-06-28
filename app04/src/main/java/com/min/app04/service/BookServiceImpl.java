@@ -1,10 +1,6 @@
 package com.min.app04.service;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,36 +20,28 @@ public class BookServiceImpl implements BookService {
   }
 
   @Override
-  public Map<String, Object> getBookList() {
-    // {"books": [{"bookNo": 1, "title": "소나기", "author": "황순원"}, {}, {}, {}, {}]}
-    return Map.of("books", bookDAO.getBookList());
+  public List<BookDTO> getBookList() {
+    return bookDAO.getBookList();
   }
 
   @Override
-  public Map<String, Object> getBookByNo(int bookNo) {
-    // {"book": {"bookNo": 1, "title": "소나기", "author": "황순원"}}
-    return Map.of("book", bookDAO.getBookByNo(bookNo));
+  public BookDTO getBookByNo(int bookNo) {
+    return bookDAO.getBookByNo(bookNo);
   }
 
   @Override
-  public Map<String, Object> insertBook(BookDTO book) {
-    // {"isSuccess": true, "inserted": "2024-06-28"}
-    return Map.of("isSuccess", bookDAO.insertBook(book) == 1
-                , "inserted", DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
+  public int insertBook(BookDTO book) {
+    return bookDAO.insertBook(book);
   }
 
   @Override
-  public Map<String, Object> updateBook(BookDTO book) {
-    // {"isSuccess": true, "updated": "2024-06-28"}
-    return Map.of("isSuccess", bookDAO.updateBook(book) == 1
-                , "updated", new SimpleDateFormat("yyyy-MM-dd").format(System.currentTimeMillis()));
+  public int updateBook(BookDTO book) {
+    return bookDAO.updateBook(book);
   }
 
   @Override
-  public Map<String, Object> deleteBook(int bookNo) {
-    // {"isSuccess": true, "deleted": "2024-06-28"}
-    return Map.of("isSuccess", bookDAO.deleteBook(bookNo) == 1
-                , "deleted", new SimpleDateFormat("y-MM-dd").format(new Date()));
+  public int deleteBook(int bookNo) {
+    return bookDAO.deleteBook(bookNo);
   }
 
 }

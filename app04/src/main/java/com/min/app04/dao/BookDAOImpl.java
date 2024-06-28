@@ -10,6 +10,8 @@ import com.min.app04.dto.BookDTO;
 @Repository
 public class BookDAOImpl implements BookDAO {
 
+  // DB 대신 List 사용 (bookNo 는 index + 1 로 가정)
+  
   private List<BookDTO> books;
   
   public BookDAOImpl() {
