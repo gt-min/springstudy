@@ -11,16 +11,9 @@
 <title>Insert title here</title>
 </head>
 <body>
- 
-  <div>
-    <a href="${contextPath}/bbs/list">BBS</a>
-  </div>
-  <div>
-    <a href="${contextPath}/blog/list">BLOG</a>
-  </div>
-  <div>
-    <a href="${contextPath}/news/list">NEWS</a>
-  </div>
- 
+
+  <div>${news.title}</div>
+  <div>${news.contents}</div>
+
 </body>
 </html>

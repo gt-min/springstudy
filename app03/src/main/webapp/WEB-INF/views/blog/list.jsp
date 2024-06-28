@@ -11,16 +11,13 @@
 <title>Insert title here</title>
 </head>
 <body>
- 
-  <div>
-    <a href="${contextPath}/bbs/list">BBS</a>
-  </div>
-  <div>
-    <a href="${contextPath}/blog/list">BLOG</a>
-  </div>
-  <div>
-    <a href="${contextPath}/news/list">NEWS</a>
-  </div>
- 
+
+  <c:forEach items="${blogList}" var="blog" varStatus="vs">
+    <ul class="blog">
+      <li><a href="${contextPath}/blog/detail?blogNo=${vs.index + 1}">${blog.title}</a></li>
+      <li>${blog.contents}</li>
+    </ul>
+  </c:forEach>
+
 </body>
 </html>
