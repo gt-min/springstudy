@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.min.app04.dto.BookDTO;
 import com.min.app04.service.BookService;
 
-@Controller
+// @Controller
 public class BookController1 {
 
   private BookService bookService;
@@ -54,7 +53,7 @@ public class BookController1 {
   /* produces = "application/xml"
    *            설명) 응답 데이터 타입은 XML 이다. */
   @GetMapping(value = "/api/books.xml", produces = "application/xml")
-  public Map<String, List<BookDTO>> listXml() {
+  public Map<String, Object> listXml() {
     // <List><book><bookNo>1</bookNo><title>소나기</title><author>황순원</author></book>...</List>
     return Map.of("book", bookService.getBookList());
   }
