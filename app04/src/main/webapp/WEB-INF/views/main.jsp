@@ -52,62 +52,7 @@
     </table>
   </div>
   
-<script>
-
-const books = $('#books');
-
-const GetBooks = (url, dataType)=>{
-  $.ajax({
-    type: 'get',
-    url: '${contextPath}' + url,
-    dataType: dataType
-  }).done(resData=>{
-    
-    books.empty();
-    
-    if(dataType === 'xml') {      
-      $.each(resData.getElementsByTagName('book'), (i, book)=>{
-        let str = '<tr>';
-        str += '<td>' + book.getElementsByTagName('bookNo')[0].textContent + '</td>';
-        str += '<td>' + book.getElementsByTagName('title')[0].textContent + '</td>';
-        str += '<td>' + book.getElementsByTagName('author')[0].textContent + '</td>';
-        str += '<td><button type="button" class="detail-btn" data-book-no="' + book.getElementsByTagName('bookNo')[0].textContent + '">상세</button></td>';
-        str += '</tr>';
-        books.append(str);
-      });
-    } else if(dataType === 'json') {      
-      $.each(resData.books, (i, book)=>{
-        let str = '<tr>';
-        str += '<td>' + book.bookNo + '</td>';
-        str += '<td>' + book.title + '</td>';
-        str += '<td>' + book.author + '</td>';
-        str += '<td><button type="button" class="detail-btn" data-book-no="' + book.bookNo + '">상세</button></td>';
-        str += '</tr>';
-        books.append(str);
-      })
-    }
-    
-  }).fail(jqXHR=>{
-    alert(jqXHR.responseText);
-  })
-}
-
-// GetBooks('/api/books', 'json');
-// GetBooks('/api/books.json', 'json');
-GetBooks('/api/books.xml', 'xml');
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
+<script src="${contextPath}/resources/js/app04.js"></script>
   
 </body>
 </html>
