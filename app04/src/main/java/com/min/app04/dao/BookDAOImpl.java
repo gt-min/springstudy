@@ -22,7 +22,6 @@ public class BookDAOImpl implements BookDAO {
     books.add(new BookDTO(4, "수학의정석", "홍성대"));
     books.add(new BookDTO(5, "자바의정석", "남궁성"));    
   }
-  
 
   @Override
   public List<BookDTO> getBookList() {
