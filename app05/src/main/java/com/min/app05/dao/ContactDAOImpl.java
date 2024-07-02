@@ -21,7 +21,7 @@ public class ContactDAOImpl implements ContactDAO {
 
   @Override
   public List<ContactDTO> getContactList() {
-    return null;
+    return sqlSessionTemplate.selectList("com.min.app05.dao.ContactMapper.getContactList");
   }
 
   @Override
@@ -31,20 +31,17 @@ public class ContactDAOImpl implements ContactDAO {
 
   @Override
   public int registerContact(ContactDTO contact) {
-    // TODO Auto-generated method stub
-    return 0;
+    return sqlSessionTemplate.insert("com.min.app05.dao.ContactMapper.registerContact", contact);
   }
 
   @Override
   public int modifyContact(ContactDTO contact) {
-    // TODO Auto-generated method stub
-    return 0;
+    return sqlSessionTemplate.update("com.min.app05.dao.ContactMapper.modifyContact", contact);
   }
 
   @Override
   public int removeContact(int contactNo) {
-    // TODO Auto-generated method stub
-    return 0;
+    return sqlSessionTemplate.delete("com.min.app05.dao.ContactMapper.removeContact", contactNo);
   }
 
 }

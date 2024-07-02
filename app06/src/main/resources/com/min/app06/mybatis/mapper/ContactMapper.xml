@@ -3,7 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-<mapper namespace="com.min.app05.dao.ContactMapper">
+<mapper namespace="com.min.app06.mapper.ContactMapper">
 
   <select id="getContactList" resultType="ContactDTO">
     SELECT contact_no, name, email, mobile, created_at
@@ -26,9 +26,9 @@
       , created_at
     ) VALUES (
         contact_seq.nextval
-      , #{name}    <!-- ps.setString(1, getName()) -->
-      , #{email}   <!-- ps.setString(2, getEmail()) -->
-      , #{mobile}  <!-- ps.setString(3, getMobile()) -->
+      , #{name}
+      , #{email}
+      , #{mobile}
       , CURRENT_DATE
     )
   </insert>
@@ -45,6 +45,15 @@
     DELETE
       FROM contact_t
      WHERE contact_no = #{contactNo}
+  </delete>
+  
+  <delete id="removeContactList" parameterType="List">
+    DELETE
+      FROM contact_t
+     WHERE contact_no IN 
+     <foreach collection="list" item="contactNo" open="(" close=")" separator=",">
+       #{contactNo}
+     </foreach>
   </delete>
 
 </mapper>
