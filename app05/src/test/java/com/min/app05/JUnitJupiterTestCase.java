@@ -9,12 +9,11 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.min.app05.dao.ContactDAO;
 
-@SpringJUnitConfig(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
-
-/*
+/* 
  * 
  */
-// @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
+
+@SpringJUnitConfig(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml", "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"})
 
 class JUnitJupiterTestCase {
 
