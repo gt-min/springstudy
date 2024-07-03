@@ -7,8 +7,9 @@ import com.min.app06.dto.ContactDTO;
 public interface ContactService {
   List<ContactDTO> getContactList();
   ContactDTO getContactByNo(int contactNo);
-  int registerContact(ContactDTO contact);
-  int modifyContact(ContactDTO contact);
-  int removeContact(int contactNo);
-  int removeContactList(String[] contactNoList);
+  int tx_registerContact(ContactDTO contact);
+  int tx_modifyContact(ContactDTO contact);
+  int tx_removeContact(int contactNo);
+  int tx_removeContactList(String[] contactNoList);
+  void tx_txTest();
 }

@@ -6,13 +6,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
+import com.min.app06.config.AppConfig;
 import com.min.app06.dto.ContactDTO;
 import com.min.app06.mapper.ContactMapper;
 
-@SpringJUnitConfig(locations = {
-    "file:src/main/webapp/WEB-INF/spring/root-context.xml"
-  , "file:src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml"
-})
+@SpringJUnitConfig(classes = AppConfig.class)
 
 class JUnitJupiterUnitTest {
 

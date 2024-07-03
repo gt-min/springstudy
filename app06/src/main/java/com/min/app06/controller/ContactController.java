@@ -36,8 +36,8 @@ public class ContactController {
   }
   
   @GetMapping(value = "/detail.do")
-  public String detail(@RequestParam(value = "contactNo", required = false, defaultValue = "0") int contactNo
-                     , Model model) {
+  public String wp_detail(@RequestParam(value = "contactNo", required = false, defaultValue = "0") int contactNo
+                        , Model model) {
     model.addAttribute("contact", contactService.getContactByNo(contactNo));
     return "contact/detail";
   }
@@ -48,10 +48,10 @@ public class ContactController {
   }
   
   @PostMapping(value = "/register.do")
-  public String register(ContactDTO contact
-                       , RedirectAttributes rttr) {
+  public String wp_register(ContactDTO contact
+                          , RedirectAttributes rttr) {
     String redirectURL, registerResult;
-    if(contactService.registerContact(contact) == 1) {
+    if(contactService.tx_registerContact(contact) == 1) {
       redirectURL = "/contact/list.do";
       registerResult = "연락처 등록 성공";
     } else {
@@ -63,19 +63,19 @@ public class ContactController {
   }
   
   @PostMapping(value = "/modify.do")
-  public String modify(ContactDTO contact
-                     , RedirectAttributes rttr) {
-    String modifyResult = contactService.modifyContact(contact) == 1 ? "연락처 수정 성공" : "연락처 수정 실패";
+  public String wp_modify(ContactDTO contact
+                        , RedirectAttributes rttr) {
+    String modifyResult = contactService.tx_modifyContact(contact) == 1 ? "연락처 수정 성공" : "연락처 수정 실패";
     rttr.addAttribute("contactNo", contact.getContactNo())
         .addFlashAttribute("modifyResult", modifyResult);
     return "redirect:/contact/detail.do?contactNo={contactNo}";
   }
   
   @GetMapping(value = "/remove.do")
-  public String remove(@RequestParam(value = "contactNo", required = false, defaultValue = "0") int contactNo
-                     , RedirectAttributes rttr) {
+  public String wp_remove(@RequestParam(value = "contactNo", required = false, defaultValue = "0") int contactNo
+                        , RedirectAttributes rttr) {
     Map<String, Object> map = new HashMap<>();
-    if(contactService.removeContact(contactNo) == 1) {
+    if(contactService.tx_removeContact(contactNo) == 1) {
       map.put("redirectURL", "/contact/list.do");
       map.put("removeResult", "연락처 삭제 성공");
     } else {
@@ -88,9 +88,9 @@ public class ContactController {
   }
   
   @GetMapping(value = "/removes.do")
-  public String removes(@RequestParam(value = "contactNo") String[] contactNoList
-                      , RedirectAttributes rttr) {
-    String removeListResult = contactService.removeContactList(contactNoList) == contactNoList.length ? "선택한 모든 연락처 삭제 성공" : "선택한 연락처 삭제 실패";
+  public String wp_removes(@RequestParam(value = "contactNo") String[] contactNoList
+                         , RedirectAttributes rttr) {
+    String removeListResult = contactService.tx_removeContactList(contactNoList) == contactNoList.length ? "선택한 모든 연락처 삭제 성공" : "선택한 연락처 삭제 실패";
     rttr.addFlashAttribute("removeListResult", removeListResult);
     return "redirect:/contact/list.do";
   }

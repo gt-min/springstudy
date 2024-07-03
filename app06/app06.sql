@@ -1,7 +1,7 @@
 DROP TABLE contact_t;
 CREATE TABLE contact_t (
   contact_no NUMBER NOT NULL PRIMARY KEY,
-  name       VARCHAR2(100 BYTE),
+  name       VARCHAR2(100 BYTE) NOT NULL,
   email      VARCHAR2(100 BYTE),
   mobile     VARCHAR2(100 BYTE),
   created_at DATE
