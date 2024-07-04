@@ -16,4 +16,6 @@ public class UploadDTO {
   private String uploader;
   private String ip;
   private Date uploadDt;
+  
+  private int fileCnt;
 }

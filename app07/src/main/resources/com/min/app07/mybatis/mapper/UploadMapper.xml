@@ -8,7 +8,7 @@
   <!-- parameterType="UploadDTO" : 서비스가 준 UploadDTO -->
   <insert id="insertUpload" parameterType="UploadDTO">
     <!-- keyProperty="uploadNo" : 파라미터로 전달된 UploadDTO 의 uploadNo 필드에 upload_seq.nextval 값을 저장하겠다. -->
-    <selectKey order="BEFORE" keyProperty="uploadNo">
+    <selectKey order="BEFORE" keyProperty="uploadNo" resultType="int">
       SELECT upload_seq.nextval FROM dual
     </selectKey>
     INSERT INTO upload_t (
@@ -39,5 +39,30 @@
       , #{uploadNo}
     )
   </insert>
+  
+  <select id="getUploadList" resultType="UploadDTO">
+    SELECT 
+           u.upload_no
+         , u.uploader
+         , COUNT(f.file_no) AS file_cnt
+      FROM
+           upload_t u LEFT JOIN file_t f
+        ON
+           u.upload_no = f.upload_no
+     GROUP BY
+           u.upload_no, u.uploader
+  </select>
+  
+  <select id="getUploadByNo" parameterType="int" resultType="UploadDTO">
+    SELECT upload_no, uploader, ip, upload_dt
+      FROM upload_t
+     WHERE upload_no = #{uploadNo}
+  </select>
+  
+  <select id="getFileList" parameterType="int" resultType="FileDTO">
+    SELECT file_no, upload_path, original_filename, filesystem_name
+      FROM file_t
+     WHERE upload_no = #{uploadNo}
+  </select>
   
 </mapper>

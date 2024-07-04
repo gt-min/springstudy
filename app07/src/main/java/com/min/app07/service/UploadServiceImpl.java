@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartResolver;
@@ -42,21 +43,23 @@ public class UploadServiceImpl implements IUploadService {
         .uploader(uploader)
         .ip(ip)
         .build();
-    
     uploadMapper.insertUpload(upload);  // UploadMapper 에서 upload 에 uploadNo 를 저장한다.
      
-    
     int uploadNo = upload.getUploadNo();
     String uploadPath = fileUploadUtils.getUploadPath();
     File uploadDir = new File(uploadPath);
     if(!uploadDir.exists())
       uploadDir.mkdirs();
-    
     List<MultipartFile> files = multipartRequest.getFiles("files");
     files.stream().forEach(file -> {
       String originalFilename = file.getOriginalFilename();
       String filesystemName = fileUploadUtils.getFilesystemName(originalFilename);
-      
+      File uploadFile = new File(uploadDir, filesystemName);
+      try { 
+        file.transferTo(uploadFile);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
       FileDTO fileDTO = FileDTO.builder()
           .uploadPath(uploadPath)
           .originalFilename(originalFilename)
@@ -66,13 +69,19 @@ public class UploadServiceImpl implements IUploadService {
       uploadMapper.insertFile(fileDTO);
     });
     
+    return 1;
     
-    
-    
-    
-    
-    
-    return 0;
+  }
+  
+  @Override
+  public List<UploadDTO> getUploadList() {
+    return uploadMapper.getUploadList();
+  }
+  
+  @Override
+  public void loadUpload(int uploadNo, Model model) {
+    model.addAttribute("upload", uploadMapper.getUploadByNo(uploadNo));
+    model.addAttribute("fileList", uploadMapper.getFileList(uploadNo));
   }
 
 }

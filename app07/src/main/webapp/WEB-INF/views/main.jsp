@@ -29,6 +29,18 @@
     </form>
   </div>
   
+  <hr>
+  
+  <div>
+    <c:forEach items="${uploadList}" var="upload">
+      <div class="upload">
+        <span class="uploadNo">${upload.uploadNo}</span>
+        <span class="uploader"><a href="${contextPath}/detail.do?uploadNo=${upload.uploadNo}">${upload.uploader}</a></span>
+        <span class="fileCnt">(${upload.fileCnt})</span>
+      </div>
+    </c:forEach>
+  </div>
+  
   <script>
   
     const isOversize = (file)=>{

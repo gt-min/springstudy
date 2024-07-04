@@ -9,7 +9,7 @@ import org.springframework.web.multipart.support.StandardServletMultipartResolve
 public class UploadConfig {
 
   @Bean
-  MultipartResolver multipartResolver() {
+  MultipartResolver multipartResolver() {  /* Bean 의 이름은 항상 multipartResolver 여야 한다. */
     return new StandardServletMultipartResolver();
   }
   
