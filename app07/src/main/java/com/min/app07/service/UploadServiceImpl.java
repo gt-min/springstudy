@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -256,6 +257,15 @@ public class UploadServiceImpl implements IUploadService {
     
     return new ResponseEntity<>(new FileSystemResource(tmpFile), headers, HttpStatus.OK);
     
+  }
+  
+  @Override
+  public void removeTmpFiles() {
+    File tmpDir = new File("/tmp");
+    File[] tmpFiles = tmpDir.listFiles();
+    if(tmpFiles != null) {
+      Arrays.stream(tmpFiles).forEach(tmpFile -> tmpFile.delete());
+    }
   }
   
 }

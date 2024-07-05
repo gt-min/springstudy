@@ -18,4 +18,5 @@ public interface IUploadService {
   void loadUpload(int uploadNo, Model model);
   ResponseEntity<Resource> download(String userAgent, int fileNo);
   ResponseEntity<Resource> downloadAll(int uploadNo);
+  void removeTmpFiles();
 }
