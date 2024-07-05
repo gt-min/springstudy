@@ -65,4 +65,10 @@
      WHERE upload_no = #{uploadNo}
   </select>
   
+  <select id="getFileByNo" parameterType="int" resultType="FileDTO">
+    SELECT file_no, upload_path, original_filename, filesystem_name
+      FROM file_t
+     WHERE file_no = #{fileNo}
+  </select>
+  
 </mapper>

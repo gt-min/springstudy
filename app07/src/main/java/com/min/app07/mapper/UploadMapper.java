@@ -14,4 +14,5 @@ public interface UploadMapper {
   List<UploadDTO> getUploadList();
   UploadDTO getUploadByNo(int uploadNo);
   List<FileDTO> getFileList(int uploadNo);
+  FileDTO getFileByNo(int fileNo);
 }
