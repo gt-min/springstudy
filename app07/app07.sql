@@ -1,31 +1,32 @@
-DROP SEQUENCE UPLOAD_SEQ;
-DROP SEQUENCE FILE_SEQ;
-CREATE SEQUENCE UPLOAD_SEQ;
-CREATE SEQUENCE FILE_SEQ;
+DROP SEQUENCE upload_seq;
+DROP SEQUENCE file_seq;
+CREATE SEQUENCE upload_seq;
+CREATE SEQUENCE file_seq;
 
-DROP TABLE FILE_T;
-DROP TABLE UPLOAD_T;
+DROP TABLE file_t;
+DROP TABLE upload_t;
 
-CREATE TABLE UPLOAD_T (
-  UPLOAD_NO NUMBER NOT NULL,
-  UPLOADER  VARCHAR2(100 BYTE),
-  IP        VARCHAR2(50 BYTE),
-  UPLOAD_DT DATE, 
-  CONSTRAINT PK_UPLOAD PRIMARY KEY(UPLOAD_NO)
+CREATE TABLE upload_t (
+  upload_no NUMBER NOT NULL,
+  uploader  VARCHAR2(100 BYTE),
+  ip        VARCHAR2(50 BYTE),
+  upload_dt DATE, 
+  CONSTRAINT pk_upload PRIMARY KEY(upload_no)
 );
-CREATE TABLE FILE_T (
-  FILE_NO           NUMBER NOT NULL,
-  UPLOAD_PATH       VARCHAR2(500 BYTE),
-  ORIGINAL_FILENAME VARCHAR2(300 BYTE),
-  FILESYSTEM_NAME   VARCHAR2(40 BYTE),
-  UPLOAD_NO         NUMBER,
-  CONSTRAINT PK_FILE PRIMARY KEY(FILE_NO),
-  CONSTRAINT FK_FILE_UPLOAD FOREIGN KEY(UPLOAD_NO)
-    REFERENCES UPLOAD_T(UPLOAD_NO)
+CREATE TABLE file_t (
+  file_no           NUMBER NOT NULL,
+  upload_path       VARCHAR2(500 BYTE),
+  original_filename VARCHAR2(300 BYTE),
+  filesystem_name   VARCHAR2(40 BYTE),
+  upload_no         NUMBER,
+  down_count        NUMBER,
+  CONSTRAINT pk_file PRIMARY KEY(file_no),
+  CONSTRAINT fk_file_upload FOREIGN KEY(upload_no)
+    REFERENCES upload_t(upload_no)
       ON DELETE CASCADE
 );
 
-SELECT U.upload_no, U.uploader, U.ip, U.upload_dt, F.file_no, F.original_filename
+SELECT U.upload_no, U.uploader, U.ip, U.upload_dt, F.file_no, F.original_filename, F.down_count
   FROM upload_t U LEFT JOIN file_t F
     ON U.upload_no = F.upload_no;
 

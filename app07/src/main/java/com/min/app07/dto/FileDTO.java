@@ -15,4 +15,5 @@ public class FileDTO {
   private String originalFilename;
   private String filesystemName;
   private int uploadNo;
+  private int downCount;
 }

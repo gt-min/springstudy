@@ -69,13 +69,9 @@ public class UploadController {
     return uploadService.download(userAgent, fileNo);
   }
   
-  
-  
-  
-  
-  
-  
-  
-  
+  @GetMapping(value = "/downloadAll.do", produces = "application/octet-stream")
+  public ResponseEntity<Resource> downloadAll(@RequestParam(name = "uploadNo") int uploadNo) {
+    return uploadService.downloadAll(uploadNo);
+  }
   
 }

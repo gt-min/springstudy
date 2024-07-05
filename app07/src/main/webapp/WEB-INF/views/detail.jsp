@@ -21,9 +21,12 @@
   <hr>
   
   <div>첨부 목록</div>
+  <div>
+    <button type="button" id="down-all-btn">모두 다운로드</button>
+  </div>
   <c:forEach items="${fileList}" var="file">
     <div>
-      <span>${file.originalFilename}</span>
+      <span>${file.originalFilename}(${file.downCount})</span>
       <button type="button" class="down-btn" data-file-no="${file.fileNo}">다운로드</button>  
     </div>
   </c:forEach>
@@ -40,6 +43,18 @@
   
     $('.down-btn').on('click', evt=>{
       downloadOne(evt.target);
+    })
+    
+    const downloadAll = ()=>{
+      if(!confirm('모든 파일을 다운로드 할까요?')){
+        alert('취소되었습니다.');
+        return;
+      }
+      location.href = '${contextPath}/downloadAll.do?uploadNo=${upload.uploadNo}';
+    }
+    
+    $('#down-all-btn').on('click', evt=>{
+      downloadAll();
     })
     
   </script>
