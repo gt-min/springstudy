@@ -29,7 +29,7 @@ CREATE TABLE user_t (
   name        VARCHAR2(100 BYTE),
   gender      VARCHAR2(5 BYTE),
   mobile      VARCHAR2(20 BYTE),
-  sns        NUMBER,  /* 가입형태(0:직접,1:네이버) */
+  sns         NUMBER,  /* 가입형태(0:직접,1:네이버) */
   pw_modify_dt DATE,
   signup_dt DATE,
   CONSTRAINT pk_user PRIMARY KEY(user_no)

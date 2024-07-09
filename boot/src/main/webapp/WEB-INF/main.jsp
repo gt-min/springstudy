@@ -7,7 +7,13 @@
 <jsp:include page="./layout/header.jsp">
   <jsp:param value="홈" name="title"/>
 </jsp:include>
-  
-    <h1>Welcome To My Home</h1>
-  
+
+<h1>Welcome To My Home</h1>
+
+<script>
+  if('${signupMessage}' !== ''){
+    alert('${signupMessage}');
+  }
+</script>
+
 <%@ include file="./layout/footer.jsp" %>
