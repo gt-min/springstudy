@@ -13,7 +13,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
 @Component
-public class JavaMailUtils {
+public class JakartaMailUtils {
   
   public void sendMail(String to, String subject, String content) {
     
