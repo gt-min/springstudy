@@ -1,10 +1,13 @@
 package com.min.boot.utils;
 
+import org.springframework.stereotype.Component;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
+@Component
 public class PageUtils {
 
   private int total;    // 전체 개수 (데이터베이스에서 구하는 정보)

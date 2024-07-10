@@ -23,26 +23,26 @@ DROP TABLE user_t;
 
 -- 회원
 CREATE TABLE user_t (
-  user_no     NUMBER             NOT NULL,
-  email       VARCHAR2(100 BYTE) NOT NULL UNIQUE,
-  pw          VARCHAR2(64 BYTE),
-  name        VARCHAR2(100 BYTE),
-  gender      VARCHAR2(5 BYTE),
-  mobile      VARCHAR2(20 BYTE),
-  sns         NUMBER,  /* 가입형태(0:직접,1:네이버) */
+  user_no      NUMBER             NOT NULL,
+  email        VARCHAR2(100 BYTE) NOT NULL UNIQUE,
+  pw           VARCHAR2(64 BYTE),
+  name         VARCHAR2(100 BYTE),
+  gender       VARCHAR2(5 BYTE),
+  mobile       VARCHAR2(20 BYTE),
+  sns          NUMBER,  /* 가입형태(0:직접,1:네이버) */
   pw_modify_dt DATE,
-  signup_dt DATE,
+  signup_dt    DATE,
   CONSTRAINT pk_user PRIMARY KEY(user_no)
 );
 
 -- 접속 기록
 CREATE TABLE access_t (
-  access_no         NUMBER             NOT NULL,
-  email             VARCHAR2(100 BYTE),
-  ip                VARCHAR2(50 BYTE),
-  user_agent        VARCHAR2(150 BYTE),
-  session_id        VARCHAR2(32 BYTE),
-  signin_dt         DATE,
+  access_no  NUMBER             NOT NULL,
+  email      VARCHAR2(100 BYTE),
+  ip         VARCHAR2(50 BYTE),
+  user_agent VARCHAR2(150 BYTE),
+  session_id VARCHAR2(32 BYTE),
+  signin_dt  DATE,
   CONSTRAINT pk_access PRIMARY KEY(access_no),
   CONSTRAINT fk_access_user FOREIGN KEY(email)
       REFERENCES user_t(email) ON DELETE CASCADE
@@ -62,7 +62,7 @@ CREATE TABLE bbs_t (
   contents    VARCHAR2(4000 BYTE) NOT NULL,
   user_no     NUMBER              NOT NULL,
   create_dt   DATE                NULL,
-  state       NUMBER              NULL,  -- 0:삭제, 1:정상
+  state       NUMBER              NULL,  -- -1:삭제, 1:정상
   depth       NUMBER              NULL,  -- 0:원글, 1:답글, 2:답답글, ...
   group_no    NUMBER              NULL,  -- 원글과 원글에 달린 모든 답글들은 동일한 GROUP_NO를 가짐
   group_order NUMBER              NULL,  -- 같은 GROUP_NO 내부에서 표시할 순서

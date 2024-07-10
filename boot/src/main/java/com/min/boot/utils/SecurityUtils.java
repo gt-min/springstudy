@@ -1,6 +1,9 @@
 package com.min.boot.utils;
 
 import java.security.MessageDigest;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -35,11 +38,28 @@ public class SecurityUtils {
     return source.replace("<", "&lt;").replace(">", "&gt;");
   }
   
+  /* 인증 코드 생성기
+   * 1. 대문자 + 숫자 조합으로 생성한다.
+   * 2. 코드 길이, 대문자 사용 여부, 숫자 사용 여부를 받아서 생성한다.  */
   
-  
-  
-  
-  
-  
+  public String getRandomCode(int length, boolean letter, boolean number) {
+    /* [ABCD....][01234...] 리스트 만들어 랜덤 인덱스로 추출 */
+    List<String> source = new ArrayList<>();
+    if(letter) {
+      for(char ch = 'A'; ch <= 'Z'; ch++)
+        source.add(ch + "");
+    }
+    if(number) {
+      for(char ch = '0'; ch <= '9'; ch++)
+        source.add(ch + "");
+    }
+    SecureRandom random = new SecureRandom();
+    StringBuilder builder = new StringBuilder();
+    if(letter || number) {
+      for(int count = 0; count < length; count++)
+        builder.append( source.get(random.nextInt(source.size())) );
+    }
+    return builder.toString();
+  }
   
 }

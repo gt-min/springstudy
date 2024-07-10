@@ -37,11 +37,9 @@
   
   <dependencies>
 
-    <!-- https://mvnrepository.com/artifact/com.sun.mail/jakarta.mail -->
     <dependency>
-      <groupId>com.sun.mail</groupId>
-      <artifactId>jakarta.mail</artifactId>
-      <version>2.0.1</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-mail</artifactId>
     </dependency>
 
     <!-- log4jdbc-log4j2 (JDBC proxy driver for logging SQL) -->
@@ -71,7 +69,6 @@
       <groupId>org.apache.tomcat.embed</groupId>
       <artifactId>tomcat-embed-jasper</artifactId>
     </dependency>
-
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -115,7 +112,7 @@
       <version>3.0.3</version>
       <scope>test</scope>
     </dependency>
-    
+
   </dependencies>
 
   <build>

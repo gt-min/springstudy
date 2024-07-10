@@ -29,4 +29,37 @@
     )
   </insert>
   
+  <select id="getUserByMap" parameterType="Map" resultType="UserDTO">
+    SELECT user_no, email, pw, name, gender, mobile, sns, pw_modify_dt, signup_dt
+      FROM user_t
+    <where> 
+      <if test="email != null">email = #{email}</if>
+      <if test="pw != null">AND pw = #{pw}</if>
+    </where>
+  </select>
+  
+  <insert id="insertAccess" parameterType="Map">
+    INSERT INTO access_t (
+        access_no
+      , email
+      , ip
+      , user_agent
+      , session_id
+      , signin_dt
+    ) VALUES (
+        access_seq.NEXTVAL
+      , #{email}
+      , #{ip}
+      , #{userAgent}
+      , #{sessionId}
+      , CURRENT_DATE
+    )
+  </insert>
+  
+  <delete id="deleteUser" parameterType="int">
+    DELETE
+      FROM user_t
+     WHERE user_no = #{userNo}
+  </delete>
+  
 </mapper>

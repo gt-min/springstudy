@@ -14,6 +14,9 @@
   if('${signupMessage}' !== ''){
     alert('${signupMessage}');
   }
+  if('${leaveMessage}' !== ''){
+    alert('${leaveMessage}');
+  }
 </script>
 
 <%@ include file="./layout/footer.jsp" %>
