@@ -1,6 +1,7 @@
 package com.min.boot.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,12 @@ public class BbsController {
   private final IBbsService bbsService;
   
   @GetMapping(value = "/list.do")
-  public String listDo() {
+  public String listDo(HttpServletRequest request, Model model) {
+    bbsService.loadBbsList(request, model);
     return "bbs/list";
   }
   
+  /*  /bbs/write.page 요청 이전에 로그인 여부를 점검하는 SigninCheck 인터셉터가 동작한다.  */
   @GetMapping(value = "/write.page")
   public String writePage() {
     return "bbs/write";

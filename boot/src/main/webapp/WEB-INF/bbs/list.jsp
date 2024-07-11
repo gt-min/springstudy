@@ -19,7 +19,30 @@
 </div>
 
 <div>
-  목록
+  <div>${total}개</div>
+  <table border="1">
+    <thead>
+      <tr>
+        <td>작성자</td>
+        <td>내용</td>
+        <td>작성일자</td>
+      </tr>
+    </thead>
+    <tbody>
+      <c:forEach items="${bbsList}" var="bbs">
+        <tr>
+          <td>${bbs.userDTO.name}</td>
+          <td>${bbs.contents}</td>
+          <td>${bbs.createDt}</td>
+        </tr>
+      </c:forEach>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3">${paging}</td>
+      </tr>
+    </tfoot>
+  </table>
 </div>
 
 <script>
@@ -28,14 +51,5 @@
     alert('${saveParentMessage}');
 
 </script>
-
-
-
-
-
-
-
-
-
 
 <%@ include file="../layout/footer.jsp" %>

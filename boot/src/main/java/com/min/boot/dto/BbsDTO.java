@@ -14,10 +14,10 @@ import lombok.NoArgsConstructor;
 public class BbsDTO {
   private int bbsNo;
   private String contents;
-  private int userNo;
   private Date createDt;
   private int state;
   private int depth;
   private int groupNo;
   private int groupOrder;
+  private UserDTO userDTO;
 }

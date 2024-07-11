@@ -117,7 +117,7 @@
 
   <build>
   
-      <!-- 빌드 결과 배포 파일의 이름 설정 (boot.war) -->
+    <!-- 빌드 결과 배포 파일의 이름 설정 (boot.war) -->
     <finalName>${project.artifactId}</finalName>
   
     <plugins>

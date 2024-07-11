@@ -5,6 +5,22 @@
   
 <mapper namespace="com.min.boot.mapper.IBbsMapper">
 
+  <!-- BbsDTO 의 구조를 정의한 BbsMap 생성하기 -->
+  <resultMap type="BbsDTO" id="BbsMap">
+    <id     property="bbsNo"      column="bbs_no"/>
+    <result property="contents"   column="contents"/>
+    <result property="createDt"   column="create_dt"/>
+    <result property="state"      column="state"/>
+    <result property="depth"      column="depth"/>
+    <result property="groupNo"    column="group_no"/>
+    <result property="groupOrder" column="group_order"/>
+    <association property="userDTO" javaType="UserDTO">
+      <id     property="userNo" column="user_no"/>
+      <result property="email"  column="email"/>
+      <result property="name"   column="name"/>
+    </association>
+  </resultMap>
+
   <insert id="insertBbsParent" parameterType="BbsDTO">
     INSERT INTO bbs_t (
         bbs_no
@@ -18,7 +34,7 @@
     ) VALUES (
         bbs_seq.NEXTVAL
       , #{contents}
-      , #{userNo}
+      , #{userDTO.userNo}
       , CURRENT_DATE
       , 1
       , 0
@@ -26,5 +42,26 @@
       , 0
     )
   </insert>
+  
+  <select id="selectBbsCount" resultType="int">
+    SELECT COUNT(*)
+      FROM bbs_t
+  </select>
+  
+  <select id="selectBbsList" parameterType="Map" resultMap="BbsMap">
+    SELECT bbs_no, contents, user_no, create_dt, state, depth, group_no, group_order, email, name
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY B.group_no DESC, B.group_order ASC) AS rnum, B.bbs_no, B.contents, B.user_no, B.create_dt, B.state, B.depth, B.group_no, B.group_order, U.email, U.name
+              FROM user_t U INNER JOIN bbs_t B
+                ON U.user_no = B.user_no)
+     WHERE rnum BETWEEN #{begin} AND #{end}
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
   
 </mapper>
