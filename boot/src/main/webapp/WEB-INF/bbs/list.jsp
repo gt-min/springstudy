@@ -22,4 +22,20 @@
   목록
 </div>
 
+<script>
+
+  if('${saveParentMessage}' !== '')
+    alert('${saveParentMessage}');
+
+</script>
+
+
+
+
+
+
+
+
+
+
 <%@ include file="../layout/footer.jsp" %>

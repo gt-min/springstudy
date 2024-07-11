@@ -5,6 +5,26 @@
   
 <mapper namespace="com.min.boot.mapper.IBbsMapper">
 
-
+  <insert id="insertBbsParent" parameterType="BbsDTO">
+    INSERT INTO bbs_t (
+        bbs_no
+      , contents
+      , user_no
+      , create_dt
+      , state
+      , depth
+      , group_no
+      , group_order
+    ) VALUES (
+        bbs_seq.NEXTVAL
+      , #{contents}
+      , #{userNo}
+      , CURRENT_DATE
+      , 1
+      , 0
+      , bbs_seq.CURRVAL
+      , 0
+    )
+  </insert>
   
 </mapper>

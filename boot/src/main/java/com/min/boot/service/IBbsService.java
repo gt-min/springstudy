@@ -1,5 +1,7 @@
 package com.min.boot.service;
 
-public interface IBbsService {
+import jakarta.servlet.http.HttpServletRequest;
 
+public interface IBbsService {
+  int saveBbsParent(HttpServletRequest request);
 }
