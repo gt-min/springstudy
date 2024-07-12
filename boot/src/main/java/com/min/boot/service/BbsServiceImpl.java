@@ -73,12 +73,43 @@ public class BbsServiceImpl implements IBbsService {
     
   }
   
+  @Override
+  public int saveBbsChild(HttpServletRequest request) {
+    
+    /* 원글의 정보 */
+    int depth = Integer.parseInt(request.getParameter("depth"));
+    int groupNo = Integer.parseInt(request.getParameter("groupNo"));
+    int groupOrder = Integer.parseInt(request.getParameter("groupOrder"));
+    
+    /* 답글의 정보 */
+    String contents = securityUtils.preventXss(request.getParameter("contents"));
+    
+    /* 작성자의 정보 */
+    UserDTO loginUser = (UserDTO) request.getSession().getAttribute("loginUser");
+    
+    /* BbsDTO bbsParent 과 updateGroupOrder */
+    BbsDTO bbsParent = BbsDTO.builder()
+        .groupNo(groupNo)
+        .groupOrder(groupOrder)
+        .build();
+    bbsMapper.updateGroupOrder(bbsParent);
+    
+    /* BbsDTO bbsChild 와 insertBbsChild */
+    BbsDTO bbsChild = BbsDTO.builder()
+        .contents(contents)
+        .userDTO(loginUser)
+        .depth(depth + 1)
+        .groupNo(groupNo)
+        .groupOrder(groupOrder + 1)
+        .build();
+    
+    return bbsMapper.insertBbsChild(bbsChild);
+    
+  }
   
-  
-  
-  
-  
-  
-  
+  @Override
+  public int removeBbs(int bbsNo) {
+    return bbsMapper.deleteBbs(bbsNo);
+  }
   
 }

@@ -85,6 +85,9 @@
   if('${saveParentMessage}' !== '')
     alert('${saveParentMessage}');
 
+  if('${saveChildMessage}' !== '')
+    alert('${saveChildMessage}');
+
   $('.open-reply-btn').on('click', evt=>{
     if(!signinCheck())
       return;
@@ -112,6 +115,12 @@
   
   $('.contents').on('click', evt=>{
     signinCheck();
+  })
+  
+  $('.remove-btn').on('click', evt=>{
+    if(confirm('삭제할까요?')){
+      location.href = '${contextPath}/bbs/remove.do?bbsNo=' + $(evt.target).data('bbsNo');
+    }
   })
   
 </script>

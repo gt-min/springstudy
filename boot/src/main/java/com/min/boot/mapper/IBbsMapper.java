@@ -12,4 +12,7 @@ public interface IBbsMapper {
   int insertBbsParent(BbsDTO bbsParent);
   int selectBbsCount();
   List<BbsDTO> selectBbsList(Map<String, Object> params);
+  int updateGroupOrder(BbsDTO bbsParent);
+  int insertBbsChild(BbsDTO bbsChild);
+  int deleteBbs(int bbsNo);
 }

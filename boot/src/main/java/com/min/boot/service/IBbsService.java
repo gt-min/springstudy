@@ -7,4 +7,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface IBbsService {
   int saveBbsParent(HttpServletRequest request);
   void loadBbsList(HttpServletRequest request, Model model);
+  int saveBbsChild(HttpServletRequest request);
+  int removeBbs(int bbsNo);
 }

@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.min.boot.service.IBbsService;
@@ -37,9 +38,19 @@ public class BbsController {
                          , bbsService.saveBbsParent(request) == 1 ? "원글 추가 성공" : "원글 추가 실패");
     return "redirect:/bbs/list.do";
   }
+
+  @PostMapping(value = "/saveChild.do")
+  public String saveChildDo(HttpServletRequest request, RedirectAttributes rttr) {
+    rttr.addFlashAttribute("saveChildMessage"
+        , bbsService.saveBbsChild(request) == 1 ? "답글 추가 성공" : "답글 추가 실패");
+    return "redirect:/bbs/list.do";
+  }
   
-  
-  
-  
+  @GetMapping(value = "/remove.do")
+  public String removeDo(@RequestParam int bbsNo, RedirectAttributes rttr) {
+    rttr.addFlashAttribute("removeMessage"
+        , bbsService.removeBbs(bbsNo) == 1 ? "삭제 성공" : "삭제 실패");
+    return "redirect:/bbs/list.do";
+  }
 
 }

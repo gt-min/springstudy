@@ -21,7 +21,7 @@
     </association>
   </resultMap>
 
-  <insert id="insertBbsParent" parameterType="BbsDTO">
+  <insert id="insertBbsParent" parameterType="BbsDTO">  <!-- BbsDTO 는 원글 -->
     INSERT INTO bbs_t (
         bbs_no
       , contents
@@ -56,12 +56,39 @@
      WHERE rnum BETWEEN #{begin} AND #{end}
   </select>
   
+  <update id="updateGroupOrder" parameterType="BbsDTO">  <!-- BbsDTO 는 원글 -->
+    UPDATE bbs_t
+       SET group_order = group_order + 1
+     WHERE group_no = #{groupNo}
+       AND group_order > #{groupOrder}
+  </update>
   
+  <insert id="insertBbsChild" parameterType="BbsDTO">  <!-- BbsDTO 는 답글 -->
+    INSERT INTO bbs_t (
+        bbs_no
+      , contents
+      , user_no
+      , create_dt
+      , state
+      , depth
+      , group_no
+      , group_order
+    ) VALUES (
+        bbs_seq.NEXTVAL
+      , #{contents}
+      , #{userDTO.userNo}
+      , CURRENT_DATE
+      , 1
+      , #{depth}
+      , #{groupNo}
+      , #{groupOrder}
+    )
+  </insert>
   
-  
-  
-  
-  
-  
+  <update id="deleteBbs" parameterType="int">
+    UPDATE bbs_t
+       SET state = -1
+     WHERE bbs_no = #{bbsNo}
+  </update>
   
 </mapper>
