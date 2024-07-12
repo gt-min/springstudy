@@ -15,4 +15,6 @@ public interface IBbsMapper {
   int updateGroupOrder(BbsDTO bbsParent);
   int insertBbsChild(BbsDTO bbsChild);
   int deleteBbs(int bbsNo);
+  int selectFindCount(Map<String, Object> params);
+  List<BbsDTO> selectFindList(Map<String, Object> params);
 }

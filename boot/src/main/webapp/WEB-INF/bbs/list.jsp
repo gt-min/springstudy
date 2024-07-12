@@ -21,7 +21,15 @@
 </div>
 
 <div>
-  <form>검색폼</form>
+  <form method="get"
+        action="${contextPath}/bbs/find.do">
+    <select name="column">
+      <option value="U.name">이름</option>
+      <option value="B.contents">내용</option>
+    </select>
+    <input type="text" name="query">
+    <button type="submit">검색</button>
+  </form>
 </div>
 
 <div>
@@ -87,6 +95,9 @@
 
   if('${saveChildMessage}' !== '')
     alert('${saveChildMessage}');
+  
+  if('${removeMessage}' !== '')
+    alert('${removeMessage}');
 
   $('.open-reply-btn').on('click', evt=>{
     if(!signinCheck())

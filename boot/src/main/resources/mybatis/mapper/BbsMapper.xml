@@ -91,4 +91,22 @@
      WHERE bbs_no = #{bbsNo}
   </update>
   
+  <select id="selectFindCount" parameterType="Map" resultType="int">
+    SELECT COUNT(*)
+      FROM user_t U INNER JOIN bbs_t B
+        ON U.user_no = B.user_no
+     WHERE B.state = 1
+       AND ${column} LIKE '%' || #{query} || '%'
+  </select>
+  
+  <select id="selectFindList" parameterType="Map" resultMap="BbsMap">
+    SELECT bbs_no, contents, user_no, create_dt, state, depth, group_no, group_order, email, name
+      FROM (SELECT ROW_NUMBER() OVER(ORDER BY B.group_no DESC, B.group_order ASC) AS rnum, B.bbs_no, B.contents, B.user_no, B.create_dt, B.state, B.depth, B.group_no, B.group_order, U.email, U.name
+              FROM user_t U INNER JOIN bbs_t B
+                ON U.user_no = B.user_no
+             WHERE B.state = 1
+               AND ${column} LIKE '%' || #{query} || '%')
+     WHERE rnum BETWEEN #{begin} AND #{end}
+  </select>
+  
 </mapper>

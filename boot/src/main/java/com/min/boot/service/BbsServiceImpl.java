@@ -69,7 +69,10 @@ public class BbsServiceImpl implements IBbsService {
     // View 로 전달(forward)할 데이터 Model 에 저장하기
     model.addAttribute("total", total);
     model.addAttribute("bbsList", bbsList);
-    model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/bbs/list.do", "", display));
+    model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/bbs/list.do"
+                                                   , ""
+                                                   , display
+                                                   , ""));
     
   }
   
@@ -110,6 +113,43 @@ public class BbsServiceImpl implements IBbsService {
   @Override
   public int removeBbs(int bbsNo) {
     return bbsMapper.deleteBbs(bbsNo);
+  }
+  
+  @Override
+  public void loadFindList(HttpServletRequest request, Model model) {
+    
+    // 검색 칼럼 / 검색어
+    String column = request.getParameter("column");
+    String query = request.getParameter("query");
+    Map<String, Object> params = new HashMap<>();
+    params.put("column", column);
+    params.put("query", query);
+    
+    // paging 처리를 위한 준비물 (page, total, display)
+    Optional<String> optPage = Optional.ofNullable(request.getParameter("page"));
+    int page = Integer.parseInt(optPage.orElse("1"));
+    int total = bbsMapper.selectFindCount(params);
+    Optional<String> optDisplay = Optional.ofNullable(request.getParameter("display"));
+    int display = Integer.parseInt(optDisplay.orElse("3"));
+    
+    // paging 처리에 필요한 모든 요소 계산
+    pageUtils.setPaging(total, display, page);
+    
+    // begin 과 end 값을 Map 으로 만듬
+    params.put("begin", pageUtils.getBegin());
+    params.put("end", pageUtils.getEnd());
+    
+    // 목록 가져오기
+    List<BbsDTO> bbsList = bbsMapper.selectFindList(params);
+    
+    // View 로 전달(forward)할 데이터 Model 에 저장하기
+    model.addAttribute("total", total);
+    model.addAttribute("bbsList", bbsList);
+    model.addAttribute("paging", pageUtils.getPaging(request.getContextPath() + "/bbs/find.do"
+                                                   , ""
+                                                   , display
+                                                   , "column=" + column + "&query=" + query));
+    
   }
   
 }
