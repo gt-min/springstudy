@@ -17,7 +17,6 @@
   <div>
     <label for="email">아이디</label>
     <input type="text" name="email" id="email" placeholder="example@example.com">
-    <%-- 이메일 인증 구현할 것 : 인증코드 6자리를 이메일로 보내고 입력 받아서 검증할 것 --%>
     <button type="button" id="get-code-btn">인증코드받기</button>
   </div>
   
@@ -72,7 +71,7 @@
     
     $.ajax({
       type: 'get',
-      url: '${contextPath}/user/sendCode.do',
+      url: '/user/sendCode.do',
       data: 'email=' + email.value,
       dataType: 'json'
     }).done(resData=>{
@@ -87,9 +86,7 @@
     fnEmailCheck();
   })
 
-
   /* 이메일인증 / 비밀번호 / 휴대전화 모두 통과해야 서브밋 가능하게 구현 */
-  
   
   if('${signupMessage}' !== ''){
     alert('${signupMessage}');

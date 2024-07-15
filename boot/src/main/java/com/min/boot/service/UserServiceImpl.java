@@ -4,16 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.min.boot.dto.UserDTO;
 import com.min.boot.mapper.IUserMapper;
+import com.min.boot.utils.MailUtils;
 import com.min.boot.utils.SecurityUtils;
 
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +21,7 @@ public class UserServiceImpl implements IUserService {
 
   private final IUserMapper userMapper;
   private final SecurityUtils securityUtils;
-  private final JavaMailSender javaMailSender;
+  private final MailUtils mailUtils;
   
   @Override
   public ResponseEntity<Map<String, Object>> sendCode(String email) {
@@ -32,39 +29,18 @@ public class UserServiceImpl implements IUserService {
     // 인증 코드 생성
     String code = securityUtils.getRandomCode(6, true, true);
     
-    try {
-
-      MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-      MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
-      helper.setFrom("forspringlec@gmail.com");
-      helper.setTo(new InternetAddress(email));
-      helper.setSubject("[boot] 인증 요청");
-      helper.setText("<div>인증코드는 <span>" + code + "</span>입니다.</div>", true);
-      
-//      mimeMessage.setFrom(new InternetAddress("forspringlec@gmail.com", "boot 관리자"));
-//      mimeMessage.addRecipients(MimeMessage.RecipientType.TO, InternetAddress.parse(email));
-//      mimeMessage.setSubject("[boot] 인증 요청");
-//      mimeMessage.setContent("<div>인증코드는 <span>" + code + "</span>입니다.</div>", "text/html");
-      
-      javaMailSender.send(mimeMessage);
-      
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    
-    // 메일 전송하기
-    
-    
-//    .sendMail(
-//          email
-//        , "[boot] 인증 요청"
-//        , "<div>인증코드는 <span>" + code + "</span>입니다.</div>");
+    // 메일 보내기
+    mailUtils.sendMail(
+        email
+      , "[boot]인증요청"
+      , "<div>인증코드는 <strong>" + code + "</strong>입니다."
+    );
     
     // {"code": "A43CF0"}
     return ResponseEntity.ok(Map.of("code", code));
     
   }
-  
+
   @Override
   public int signup(UserDTO user) {
     
@@ -122,14 +98,5 @@ public class UserServiceImpl implements IUserService {
     return userMapper.deleteUser(loginUser.getUserNo());
     
   }
-  
-  
-  
-  
-  
-  
-  
-  
-  
 
 }
