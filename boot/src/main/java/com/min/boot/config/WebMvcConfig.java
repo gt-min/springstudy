@@ -24,7 +24,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
       .addResourceLocations("classpath:/static/");  // src/main/resources/static 디렉터리
     
     registry.addResourceHandler("/summernote/**")
-      .addResourceLocations("file:///G:/summernote/");
+      .addResourceLocations("file:G:/summernote/");
     
   }
   

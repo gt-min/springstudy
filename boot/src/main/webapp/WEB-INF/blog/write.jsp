@@ -27,7 +27,7 @@
     <button type="submit">작성완료</button>
     <button type="button" onclick="history.back()">취소하기</button>
   </div>
-      
+  
 </form>
 
 <script>
@@ -63,10 +63,9 @@ $('#contents').summernote({
           processData: false,  /* 객체를 보내는 경우 해당 객체를 {property: value} 형식의 문자열로 자동으로 변환해서 보내는데 이를 방지해야 한다. */
 	      // 서버가 저장한 이미지의 경로와 이름을 반환 받기
 	      dataType: 'json'
-        }).done(resData=>{  // resData == {url: '경로', filename: '파일명'}
-          console.log(resData);
+        }).done(resData=>{  // resData == {url: '/경로/파일명'}
 	      // summernote 편집기에 이미지 표시하기
-          $('#contents').summernote('insertImage', resData.url, resData.filename);
+          $('#contents').summernote('insertImage', resData.url);
         })
       }
     }

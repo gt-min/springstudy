@@ -44,7 +44,7 @@ public class BlogServiceImpl implements IBlogService {
       e.printStackTrace();
     }
     
-    return ResponseEntity.ok(Map.of("src", uploadPath, "filename", filesystemName));
+    return ResponseEntity.ok(Map.of("url", uploadPath + "/" + filesystemName));
     
   }
 
