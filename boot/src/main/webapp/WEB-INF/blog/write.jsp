@@ -64,8 +64,9 @@ $('#contents').summernote({
 	      // 서버가 저장한 이미지의 경로와 이름을 반환 받기
 	      dataType: 'json'
         }).done(resData=>{  // resData == {url: '경로', filename: '파일명'}
+          console.log(resData);
 	      // summernote 편집기에 이미지 표시하기
-          $('#summernote').summernote('insertImage', resData.url, resData.filename);          
+          $('#contents').summernote('insertImage', resData.url, resData.filename);
         })
       }
     }

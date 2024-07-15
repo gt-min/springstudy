@@ -15,6 +15,10 @@ public class FileUploadUtils {
     return "/upload/" + DateTimeFormatter.ofPattern("yyyy/MM/dd").format(TODAY);
   }
   
+  public String getSummernotePath() {
+    return "/summernote/" + DateTimeFormatter.ofPattern("yyyy/MM/dd").format(TODAY);
+  }
+  
   public String getFilesystemName(String originalFilename) {
     String extension;
     if(originalFilename.endsWith(".tar.gz")) {

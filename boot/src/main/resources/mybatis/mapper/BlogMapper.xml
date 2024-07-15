@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.min.boot.mapper.IBlogMapper">
+
+  <insert id="insertBlog" parameterType="BlogDTO">
+    <selectKey keyProperty="blogNo" resultType="int" order="BEFORE">
+      SELECT blog_seq.NEXTVAL FROM dual
+    </selectKey>
+    INSERT INTO blog_t (
+        blog_no
+      , title
+      , contents
+      , hit
+      , user_no
+      , create_dt
+      , modify_dt
+    ) VALUES (
+        #{blogNo}
+      , #{title}
+      , #{contents}
+      , 0
+      , #{userNo}
+      , CURRENT_DATE
+      , CURRENT_DATE
+    )
+  </insert>
+
+  <insert id="insertSummernoteImage" parameterType="ImageDTO">
+    INSERT INTO image_t (
+        blog_no
+      , upload_path
+      , filesystem_name
+    ) VALUES (
+        #{blogNo}
+      , #{uploadPath}
+      , #{filesystemName}
+    )
+  </insert>
+  
+</mapper>

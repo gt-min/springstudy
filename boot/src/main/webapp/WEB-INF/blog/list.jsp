@@ -14,9 +14,10 @@
   <a href="${contextPath}/blog/write.page">작성하러가기</a>
 </div>
 
-
-
 <script>
+
+  if('${saveBlogMessage}' !== '')
+    alert('${saveBlogMessage}');
 
 </script>
 
