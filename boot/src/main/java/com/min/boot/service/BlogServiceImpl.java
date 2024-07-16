@@ -1,6 +1,8 @@
 package com.min.boot.service;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jsoup.Jsoup;
@@ -17,8 +19,10 @@ import com.min.boot.dto.ImageDTO;
 import com.min.boot.dto.UserDTO;
 import com.min.boot.mapper.IBlogMapper;
 import com.min.boot.utils.FileUploadUtils;
+import com.min.boot.utils.PageUtils;
 import com.min.boot.utils.SecurityUtils;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -30,6 +34,7 @@ public class BlogServiceImpl implements IBlogService {
   private final IBlogMapper blogMapper;
   private final FileUploadUtils fileUploadUtils;
   private final SecurityUtils securityUtils;
+  private final PageUtils pageUtils;
   
   @Transactional(readOnly = true)
   @Override
@@ -87,5 +92,38 @@ public class BlogServiceImpl implements IBlogService {
     return insertResult;
     
   }
+  
+  @Transactional(readOnly = true)
+  @Override
+  public ResponseEntity<Map<String, Object>> getBlogList(HttpServletRequest request) {
+    
+    int page = Integer.parseInt(request.getParameter("page"));
+    int display = 20;
+    int total = blogMapper.getBlogCount();
+    
+    pageUtils.setPaging(total, display, page);
+    
+    Map<String, Object> params = new HashMap<>();
+    params.put("begin", pageUtils.getBegin());
+    params.put("end", pageUtils.getEnd());
+    
+    List<BlogDTO> blogList = blogMapper.getBlogList(params);
+    
+    return null;
+    
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 }

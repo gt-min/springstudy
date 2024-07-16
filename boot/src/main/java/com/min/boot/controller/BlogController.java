@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.min.boot.dto.BlogDTO;
 import com.min.boot.service.IBlogService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
@@ -44,5 +45,18 @@ public class BlogController {
     rttr.addFlashAttribute("saveBlogMessage", blogService.saveBlog(blogDTO, session) == 1 ? "블로그 추가 성공" : "블로그 추가 실패");
     return "redirect:/blog/list.do";
   }
+  
+  @GetMapping(value = "/getBlogList.do", produces = "application/json")
+  public ResponseEntity<Map<String, Object>> getBlogListDo(HttpServletRequest request) {
+    return blogService.getBlogList(request);
+  }
+  
+  
+  
+  
+  
+  
+  
+  
   
 }

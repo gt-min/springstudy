@@ -17,8 +17,8 @@ public class BlogDTO {
   private String contents;
   private int hit;
   private int userNo;
-  private String name;
-  private String email;
   private Date createDt;
   private Date modifyDt;
+  private String name;
+  private String email;
 }

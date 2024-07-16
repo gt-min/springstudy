@@ -14,11 +14,33 @@
   <a href="${contextPath}/blog/write.page">작성하러가기</a>
 </div>
 
+<div id="blog-list"></div>
+
 <script>
 
   if('${saveBlogMessage}' !== '')
     alert('${saveBlogMessage}');
 
+  var page = 1;
+  
+  const paging = (p)=>{
+    page = p;
+    getBlogList();
+  }
+  
+  const getBlogList = ()=>{    
+    $.ajax({
+      type: 'get',
+      url: '${contextPath}/blog/getBlogList.do',
+      data: 'page=' + page,
+      dataType: 'json'
+    }).done(resData=>{
+      console.log(resData);
+    })
+  }
+  
+  getBlogList();
+  
 </script>
 
 <%@ include file="../layout/footer.jsp" %>
