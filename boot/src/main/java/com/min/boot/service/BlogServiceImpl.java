@@ -3,11 +3,17 @@ package com.min.boot.service;
 import java.io.File;
 import java.util.Map;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.min.boot.dto.BlogDTO;
+import com.min.boot.dto.ImageDTO;
 import com.min.boot.dto.UserDTO;
 import com.min.boot.mapper.IBlogMapper;
 import com.min.boot.utils.FileUploadUtils;
@@ -16,6 +22,7 @@ import com.min.boot.utils.SecurityUtils;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class BlogServiceImpl implements IBlogService {
@@ -24,6 +31,7 @@ public class BlogServiceImpl implements IBlogService {
   private final FileUploadUtils fileUploadUtils;
   private final SecurityUtils securityUtils;
   
+  @Transactional(readOnly = true)
   @Override
   public ResponseEntity<Map<String, Object>> summernoteImageUpload(MultipartFile multipartFile) {
     
@@ -57,6 +65,24 @@ public class BlogServiceImpl implements IBlogService {
     blogDTO.setUserNo(loginUser.getUserNo());
     
     int insertResult = blogMapper.insertBlog(blogDTO);
+    
+    // blogDTO.contents 에 포함된 <img src="/summernote/..."> 태그 Parsing 해서 image_t 에 넣기
+    Document document = Jsoup.parse(blogDTO.getContents());
+    Elements elements = document.getElementsByTag("img");
+    if(elements != null) {
+      for(Element element : elements) {
+        String src = element.attr("src");
+        int lashSlash = src.lastIndexOf("/");
+        String uploadPath = src.substring(0, lashSlash);
+        String filesystemName = src.substring(lashSlash + 1);
+        ImageDTO imageDTO = ImageDTO.builder()
+            .blogNo(blogDTO.getBlogNo())
+            .uploadPath(uploadPath)
+            .filesystemName(filesystemName)
+            .build();
+        blogMapper.insertSummernoteImage(imageDTO);
+      }
+    }
     
     return insertResult;
     

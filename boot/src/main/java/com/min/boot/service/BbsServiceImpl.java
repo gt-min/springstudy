@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 
 import com.min.boot.dto.BbsDTO;
@@ -18,6 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class BbsServiceImpl implements IBbsService {
@@ -45,6 +47,7 @@ public class BbsServiceImpl implements IBbsService {
     
   }
   
+  @Transactional(readOnly = true)
   @Override
   public void loadBbsList(HttpServletRequest request, Model model) {
   
@@ -115,6 +118,7 @@ public class BbsServiceImpl implements IBbsService {
     return bbsMapper.deleteBbs(bbsNo);
   }
   
+  @Transactional(readOnly = true)
   @Override
   public void loadFindList(HttpServletRequest request, Model model) {
     

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.min.boot.dto.UserDTO;
 import com.min.boot.mapper.IUserMapper;
@@ -15,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+@Transactional
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements IUserService {
@@ -23,6 +25,7 @@ public class UserServiceImpl implements IUserService {
   private final SecurityUtils securityUtils;
   private final MailUtils mailUtils;
   
+  @Transactional(readOnly = true)
   @Override
   public ResponseEntity<Map<String, Object>> sendCode(String email) {
     
