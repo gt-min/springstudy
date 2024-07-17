@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.min.boot.dto.BlogCommentDTO;
 import com.min.boot.dto.BlogDTO;
 import com.min.boot.dto.ImageDTO;
 
@@ -14,4 +15,11 @@ public interface IBlogMapper {
   int insertSummernoteImage(ImageDTO imageDTO);
   int getBlogCount();
   List<BlogDTO> getBlogList(Map<String, Object> params);
+  int updateHit(int blogNo);
+  BlogDTO getBlogByNo(int blogNo);
+  int insertBlogCommentParent(BlogCommentDTO blogCommentParentDTO);
+  int getBlogCommentCount(int blogNo);
+  List<BlogCommentDTO> getBlogCommentList(Map<String, Object> params);
+  int updateGroupOrder(BlogCommentDTO blogCommentParentDTO);
+  int insertBlogCommentChild(BlogCommentDTO blogCommentChildDTO);
 }

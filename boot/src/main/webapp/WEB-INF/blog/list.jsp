@@ -70,10 +70,10 @@
   
   const detail = ()=>{
     $(document).on('click', '.blog', evt=>{
-      if('${sessionScope.loginUser.userNo}' == evt.target.dataset.userNo){
-        location.href = '${contextPath}/blog/detail.do?blogNo=' + evt.target.dataset.blogNo;
+      if('${sessionScope.loginUser.userNo}' == evt.currentTarget.dataset.userNo){
+        location.href = '${contextPath}/blog/detail.do?blogNo=' + evt.currentTarget.dataset.blogNo;
       } else {
-        location.href = '${contextPath}/blog/updateHit.do?blogNo=' + evt.target.dataset.blogNo;
+        location.href = '${contextPath}/blog/updateHit.do?blogNo=' + evt.currentTarget.dataset.blogNo;
       }
     })
   }

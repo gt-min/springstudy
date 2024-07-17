@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,12 +52,31 @@ public class BlogController {
     return blogService.getBlogList(request);
   }
   
+  @GetMapping(value = "/updateHit.do")
+  public String updateHitDo(@RequestParam("blogNo") int blogNo) {
+    blogService.increseHit(blogNo);
+    return "redirect:/blog/detail.do?blogNo=" + blogNo;
+  }
   
+  @GetMapping(value = "/detail.do")
+  public String detailDo(@RequestParam("blogNo") int blogNo, Model model) {
+    model.addAttribute("blog", blogService.getBlogByNo(blogNo));
+    return "blog/detail";
+  }
   
+  @PostMapping(value = "/saveBlogCommentParent.do", produces = "application/json")
+  public ResponseEntity<Map<String, Object>> saveBlogCommentParentDo(HttpServletRequest request) {
+    return blogService.saveBlogCommentParent(request);
+  }
   
+  @GetMapping(value = "/getBlogCommentList.do", produces = "application/json")
+  public ResponseEntity<Map<String, Object>> getBlogCommentListDo(HttpServletRequest request) {
+    return blogService.getBlogCommentList(request);
+  }
   
-  
-  
-  
+  @PostMapping(value = "/saveBlogCommentChild.do", produces = "application/json")
+  public ResponseEntity<Map<String, Object>> saveBlogCommentChildDo(HttpServletRequest request) {
+    return blogService.saveBlogCommentChild(request);
+  }
   
 }
