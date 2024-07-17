@@ -4,15 +4,18 @@ DROP SEQUENCE access_seq;
 DROP SEQUENCE x_user_seq;
 DROP SEQUENCE bbs_seq;
 DROP SEQUENCE blog_seq;
+DROP SEQUENCE blog_comment_seq;
 
-CREATE SEQUENCE user_seq;
-CREATE SEQUENCE access_seq;
-CREATE SEQUENCE x_user_seq;
-CREATE SEQUENCE bbs_seq;
-CREATE SEQUENCE blog_seq;
+CREATE SEQUENCE user_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE access_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE x_user_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE bbs_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE blog_seq START WITH 1 INCREMENT BY 1;
+CREATE SEQUENCE blog_comment_seq START WITH 1 INCREMENT BY 1;
 
 
 /************************* 테이블 *************************/
+DROP TABLE blog_comment_t;
 DROP TABLE image_t;
 DROP TABLE blog_t;
 DROP TABLE bbs_t;
@@ -94,6 +97,31 @@ CREATE TABLE image_t (
     REFERENCES blog_t(blog_no) ON DELETE CASCADE
 );
 
+-- 블로그 댓글
+CREATE TABLE blog_comment_t (
+  comment_no  NUMBER NOT NULL,
+  user_no     NUMBER,
+  blog_no     NUMBER,
+  contents    VARCHAR2(1000 BYTE),
+  create_dt   DATE,
+  state       NUMBER,
+  depth       NUMBER,
+  group_no    NUMBER,
+  group_order NUMBER,
+  CONSTRAINT pk_comment PRIMARY KEY(comment_no),
+  CONSTRAINT fk_comment_user FOREIGN KEY(user_no)
+    REFERENCES user_t(user_no) ON DELETE CASCADE,
+  CONSTRAINT fk_comment_blog FOREIGN KEY(blog_no)
+    REFERENCES blog_t(blog_no) ON DELETE CASCADE
+);
+
+SELECT user_no, name, email, blog_no, contents, create_dt, state, depth, group_no, group_order
+  FROM (SELECT ROW_NUMBER() OVER(ORDER BY C.group_no DESC, C.group_order ASC) AS rnum,
+               U.user_no, U.name, U.email, C.blog_no, C.contents, C.create_dt, C.state, C.depth, C.group_no, C.group_order
+          FROM user_t U INNER JOIN blog_comment_t C
+            ON U.user_no = C.user_no
+         WHERE C.blog_no = 1)
+ WHERE rnum BETWEEN 1 AND 20;
 
 /************************* 트리거 *************************/
 /*
