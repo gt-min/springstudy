@@ -114,7 +114,7 @@
   </update>
   
   <insert id="insertBlogCommentChild" parameterType="BlogCommentDTO">  <!-- BlogCommentDTO 는 답글 -->
-    INSERT INTO blog_comment_t(
+    INSERT INTO blog_comment_t (
         comment_no
       , user_no
       , blog_no

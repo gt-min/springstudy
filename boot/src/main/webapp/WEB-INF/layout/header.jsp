@@ -58,6 +58,7 @@
       <ul>
         <li><a href="${contextPath}/bbs/list.do">BBS_계층게시판</a></li>
         <li><a href="${contextPath}/blog/list.do">BLOG_댓글게시판</a></li>
+        <li><a href="${contextPath}/openai/chat.page">챗봇</a></li>
       </ul>
     </div>
     
