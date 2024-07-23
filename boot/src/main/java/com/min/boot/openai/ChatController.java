@@ -38,7 +38,7 @@ public class ChatController {
   public ResponseEntity<String> startDo(HttpSession session, @RequestParam String prompt) throws Exception {
   
     // system 초기 메시지
-    String systemContent = "You are a thoughtful assistant. Respond to all input in 20 words and answer in korean.";
+    String systemContent = "You are a thoughtful assistant. Respond to all input in 20 words and answer in english.";
     
     // 첫채팅이라면 system 초기 메시지 작성 
     // 채팅중이라면 user 메시지 작성 
